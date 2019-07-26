@@ -2519,6 +2519,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4247705152034408, guid: 8ef4efd1b26d41f4bbfcb569a4ce2b4a,
     type: 2}
   m_PrefabInternal: {fileID: 1646370461}
+--- !u!1001 &1676902626
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864046415292960, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1259867832460158, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+      propertyPath: m_Name
+      value: 03_The_Magnetic_Fields_of_Saturn(REMIX)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 84b705b4af6ca4443ae085721b9bfc18, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &1689214981
 Prefab:
   m_ObjectHideFlags: 0

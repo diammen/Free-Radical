@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 50719512301928372}
   - component: {fileID: 114942382512575304}
   - component: {fileID: 120464720889156514}
-  - component: {fileID: 60978948089718942}
+  - component: {fileID: 58417349485970994}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626212890508130}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.31, y: 0, z: 0}
+  m_LocalPosition: {x: -5.45, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4145345509832460}
@@ -176,8 +176,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &60978948089718942
-PolygonCollider2D:
+--- !u!58 &58417349485970994
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -189,55 +189,8 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.65, y: -0.84}
-      - {x: 0.77, y: -0.68}
-      - {x: 0.84, y: -0.53}
-      - {x: 0.96999997, y: -0.35999998}
-      - {x: 1.06, y: -0.17999999}
-      - {x: 1.12, y: -0.03}
-      - {x: 1.13, y: 0.099999994}
-      - {x: 1.13, y: 0.29999998}
-      - {x: 1.11, y: 0.39}
-      - {x: 1.0699999, y: 0.56}
-      - {x: 0.97999996, y: 0.72999996}
-      - {x: 0.79999995, y: 0.91999996}
-      - {x: 0.68, y: 1.01}
-      - {x: 0.45999998, y: 1.12}
-      - {x: 0.26999998, y: 1.15}
-      - {x: 0.099999994, y: 1.15}
-      - {x: -0.04, y: 1.13}
-      - {x: -0.17999999, y: 1.1}
-      - {x: -0.41, y: 0.96999997}
-      - {x: -0.62, y: 0.78999996}
-      - {x: -0.78, y: 0.68}
-      - {x: -0.84999996, y: 0.59999996}
-      - {x: -0.96999997, y: 0.44}
-      - {x: -1.0699999, y: 0.25}
-      - {x: -1.12, y: 0.04}
-      - {x: -1.12, y: -0.24}
-      - {x: -1.11, y: -0.35}
-      - {x: -1.05, y: -0.53999996}
-      - {x: -0.93, y: -0.74}
-      - {x: -0.85999995, y: -0.84}
-      - {x: -0.68, y: -1}
-      - {x: -0.47, y: -1.1}
-      - {x: -0.31, y: -1.15}
-      - {x: -0.17, y: -1.17}
-      - {x: 0, y: -1.17}
-      - {x: 0.19, y: -1.14}
-      - {x: 0.42, y: -1.04}
-      - {x: 0.58, y: -0.90999997}
+  serializedVersion: 2
+  m_Radius: 1.28
 --- !u!61 &61714902778301368
 BoxCollider2D:
   m_ObjectHideFlags: 1

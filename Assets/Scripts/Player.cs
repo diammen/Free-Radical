@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float sizeReductionRate;
     public float maxGrowthSize;
     public float minSize;
+    public float currentFoodIntake;
 
     LineRenderer grappleRenderer;
     Rigidbody2D rb;
@@ -102,6 +103,7 @@ public class Player : MonoBehaviour
             gm.reachedCheckpoint = true;
             minSize = maxGrowthSize;
             maxGrowthSize *= 2;
+            currentFoodIntake *= 3;
         }
 
         grappleDistance = rb.transform.localScale.magnitude * grappleMaxDistance;
@@ -170,7 +172,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             creaturesEaten++;
-            rb.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+            rb.transform.localScale += new Vector3(currentFoodIntake, currentFoodIntake, currentFoodIntake);
             collision.gameObject.SetActive(false);
         }
     }

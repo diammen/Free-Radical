@@ -9,12 +9,14 @@ public class GameManager : MonoBehaviour
     public bool reachedCheckpoint;
 
     Player player;
+    CameraFollow cameraFollow;
     int currentCheckpoint;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        cameraFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
     }
 
     // Update is called once per frame
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
                 currentCheckpoint = checkpoints.Length;
             checkpoints[currentCheckpoint].gameObject.SetActive(false);
             currentCheckpoint++;
+
+            cameraFollow.newCameraSize *= 1.5f;
 
             reachedCheckpoint = false;
         }

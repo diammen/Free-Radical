@@ -54,4 +54,5 @@ MonoBehaviour:
   checkpoints:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   reachedCheckpoint: 0

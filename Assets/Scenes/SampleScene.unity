@@ -407,6 +407,11 @@ Prefab:
       propertyPath: maxGrowthSize
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114942382512575304, guid: 4a443a35640efdf4b953b6fd795deb4a,
+        type: 2}
+      propertyPath: currentFoodIntake
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a443a35640efdf4b953b6fd795deb4a, type: 2}
   m_IsPrefabAsset: 0
@@ -639,6 +644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 62161450}
   offset: {x: 0, y: 0, z: 0}
+  newCameraSize: 0
 --- !u!1001 &569820203
 Prefab:
   m_ObjectHideFlags: 0

@@ -7,15 +7,16 @@ public class Player : MonoBehaviour
     public GameObject grapple;
     public GameObject wallStuckTo;
     public LayerMask grappleMask;
+    public int creaturesEaten;
     public float grappleMaxDistance;
     public float moveSpeed;
     public float maxSpeed;
     public float sqrMaxSpeed;
     public float grappleSpeed;
     public float sizeReductionRate;
-    public int creaturesEaten;
-    public int maxGrowthSize;
+    public float maxGrowthSize;
     public float minSize;
+    public float currentFoodIntake;
 
     LineRenderer grappleRenderer;
     Rigidbody2D rb;
@@ -94,13 +95,15 @@ public class Player : MonoBehaviour
             rb.gravityScale = 1;
         }
 
-        if (rb.transform.localScale.magnitude > minSize)
+        if (rb.transform.localScale.x > minSize)
             rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
 
-        if (rb.transform.localScale.magnitude > maxGrowthSize)
+        if (rb.transform.localScale.x > maxGrowthSize)
         {
+            gm.reachedCheckpoint = true;
             minSize = maxGrowthSize;
             maxGrowthSize *= 2;
+            currentFoodIntake *= 3;
         }
 
         grappleDistance = rb.transform.localScale.magnitude * grappleMaxDistance;
@@ -150,6 +153,14 @@ public class Player : MonoBehaviour
 
         grappleRenderer.SetPosition(0, transform.position);
         grappleRenderer.SetPosition(1, grapplePoint);
+
+        if (!grappled)
+        {
+            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 grappleDir = (mousePoint - transform.position).normalized;
+
+            grapplePoint = transform.position + grappleDir * grappleDistance;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -161,7 +172,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             creaturesEaten++;
-            rb.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+            rb.transform.localScale += new Vector3(currentFoodIntake, currentFoodIntake, currentFoodIntake);
             collision.gameObject.SetActive(false);
         }
     }

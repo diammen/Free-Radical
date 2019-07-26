@@ -153,7 +153,6 @@ public class Player : MonoBehaviour
         {
             creaturesEaten++;
             rb.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
-            grappleDistance += 2;
             collision.gameObject.SetActive(false);
         }
     }

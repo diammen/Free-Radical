@@ -5,26 +5,36 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject grapple;
+    public GameObject wallStuckTo;
+    public LayerMask grappleMask;
     public float grappleMaxDistance;
     public float moveSpeed;
-    public float jumpForce;
+    public float grappleSpeed;
 
+    LineRenderer grappleRenderer;
     Rigidbody2D rb;
+    CheckTrigger grappleCollider;
     Vector2 currentVelocity;
     Vector2 force;
     Vector2 moveVector;
+    Vector2 grapplePoint;
+    Vector2 startPos;
     [SerializeField]
     float speed;
     [SerializeField]
     float horizontal;
+    float timer;
     bool onGround;
     [SerializeField]
     bool touchingWall;
+    bool grappled;
 
     // Use this for initialization
     void Start()
     {
+        grappleRenderer = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        grappleCollider = GetComponentInChildren<CheckTrigger>();
     }
 
     // Update is called once per frame
@@ -32,12 +42,10 @@ public class Player : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
 
-        moveVector = new Vector2(horizontal, 0) * (moveSpeed * 100);
-
+        moveVector = new Vector2(horizontal, 0) * (moveSpeed * 5000);
         currentVelocity = rb.velocity;
 
         force = moveVector * Time.deltaTime - currentVelocity;
-
         rb.AddForce(force, ForceMode2D.Force);
 
         speed = rb.velocity.sqrMagnitude;
@@ -46,27 +54,76 @@ public class Player : MonoBehaviour
             ScaleWall();
 
         ShootGrapple();
+        RenderGrapple();
+
+        if (grappled)
+        {
+            timer += Time.deltaTime;
+            rb.position = Vector2.Lerp(startPos, grapplePoint, timer / Vector3.Distance(startPos, grapplePoint) * grappleSpeed);
+
+            if (Vector3.Distance(rb.position, grapplePoint) <= 0.1f)
+            {
+                timer = 0;
+                grappleRenderer.enabled = false;
+                grappled = false;
+                moveVector = Vector2.zero;
+                rb.velocity = Vector2.zero;
+
+
+                rb.gravityScale = 0;
+            }
+        }
+
+        if (!grappleCollider.isColliding)
+        {
+            rb.gravityScale = 1;
+        }
     }
 
     void ScaleWall()
     {
-        rb.AddForce(Vector2.up * 25);
+        rb.AddForce(Vector2.up * 750);
     }
 
     void ShootGrapple()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !grappled)
         {
 
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 dir = (mousePoint - transform.position);
+            Vector3 grappleDir = (mousePoint - transform.position);
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, grappleMaxDistance);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, grappleDir, grappleMaxDistance, grappleMask);
 
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            if (hit.collider != null)
+            {
+                grappled = true;
+                grappleRenderer.enabled = true;
+
+                wallStuckTo = hit.collider.gameObject;
+                startPos = rb.position;
+                grapplePoint = hit.point;
+            }
+            else
+            {
+                grappled = false;
+            }
+
+            float angle = Mathf.Atan2(grappleDir.y, grappleDir.x) * Mathf.Rad2Deg;
 
             grapple.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
+    }
+
+    void RenderGrapple()
+    {
+        if (!grappled)
+            return;
+
+        grappleRenderer.positionCount = 2;
+
+        grappleRenderer.SetPosition(0, transform.position);
+        grappleRenderer.SetPosition(1, grapplePoint);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

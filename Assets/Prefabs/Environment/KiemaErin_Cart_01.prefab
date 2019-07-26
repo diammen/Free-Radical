@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4002317848695154}
   - component: {fileID: 212404825698793790}
   - component: {fileID: 60253727608444274}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: KiemaErin_Cart_01
-  m_TagString: Untagged
+  m_TagString: Climbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,8 +134,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -700186665
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 05572504fc5e7a94591c60cb5447b0ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

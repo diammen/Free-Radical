@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4335600292672480}
   - component: {fileID: 212821298484762148}
   - component: {fileID: 60449753141452056}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Boiler_01
-  m_TagString: Untagged
+  m_TagString: Climbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

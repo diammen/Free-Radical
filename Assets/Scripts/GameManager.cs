@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    GameObject[] checkpoints;
+    public GameObject[] checkpoints;
+    public bool reachedCheckpoint;
+
     Player player;
     int currentCheckpoint;
 
@@ -18,6 +20,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (reachedCheckpoint)
+        {
+            if (currentCheckpoint > checkpoints.Length)
+                currentCheckpoint = checkpoints.Length;
+            checkpoints[currentCheckpoint].gameObject.SetActive(false);
+            currentCheckpoint++;
 
+            reachedCheckpoint = false;
+        }
     }
 }

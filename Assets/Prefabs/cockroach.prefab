@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433c69586d4fac947bfcb1665ed964f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  patrolRange: 5
-  moveTime: 3
+  moveSpeed: 15
+  patrolRange: 2
+  moveTime: 1
   canFlee: 0
 --- !u!212 &212224733890552680
 SpriteRenderer:

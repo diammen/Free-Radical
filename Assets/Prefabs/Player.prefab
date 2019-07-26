@@ -247,14 +247,15 @@ MonoBehaviour:
   grappleMask:
     serializedVersion: 2
     m_Bits: 11264
+  creaturesEaten: 0
   grappleMaxDistance: 5
   moveSpeed: 5
   maxSpeed: 10
   sqrMaxSpeed: 0
   grappleSpeed: 20
   sizeReductionRate: 0.1
-  creaturesEaten: 0
   maxGrowthSize: 0
+  minSize: 0
   speed: 0
   horizontal: 0
   touchingWall: 0

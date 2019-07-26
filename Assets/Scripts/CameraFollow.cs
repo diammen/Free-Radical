@@ -17,7 +17,8 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, (target.position + offset) / 2, 0.1f);
-        //transform.position = (target.position + offset) / 2;
+        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, 0, target.position.z) + offset, 0.1f);
+
+        if (Input.GetAxis("Horizontal") != 0) offset.x *= Input.GetAxis("Horizontal");
     }
 }

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public LayerMask grappleMask;
     public float grappleMaxDistance;
     public float moveSpeed;
+    public float maxSpeed;
+    public float sqrMaxSpeed;
     public float grappleSpeed;
     public float sizeReductionRate;
     public int creaturesEaten;
@@ -38,10 +40,12 @@ public class Player : MonoBehaviour
         grappleRenderer = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
         grappleCollider = GetComponentInChildren<CheckTrigger>();
+
+        sqrMaxSpeed = maxSpeed * maxSpeed;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         horizontal = Input.GetAxis("Horizontal");
 
@@ -50,6 +54,11 @@ public class Player : MonoBehaviour
 
         force = moveVector * Time.deltaTime - currentVelocity;
         rb.AddForce(force, ForceMode2D.Force);
+
+        if (currentVelocity.sqrMagnitude > sqrMaxSpeed)
+        {
+            rb.velocity = currentVelocity.normalized * maxSpeed;
+        }
 
         speed = rb.velocity.sqrMagnitude;
 
@@ -71,7 +80,6 @@ public class Player : MonoBehaviour
                 grappled = false;
                 moveVector = Vector2.zero;
                 rb.velocity = Vector2.zero;
-
 
                 rb.gravityScale = 0;
             }
@@ -140,7 +148,9 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("NPC"))
         {
-            rb.transform.localScale += Vector3.one * (creaturesEaten * 0.1f);
+            creaturesEaten++;
+            rb.transform.localScale += Vector3.one * (5 / 10);
+            collision.gameObject.SetActive(false);
         }
     }
 

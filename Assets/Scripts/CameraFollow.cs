@@ -6,19 +6,20 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target;
     public Vector3 offset;
+    public float newCameraSize;
 
     // Use this for initialization
     void Start()
     {
         Vector3 temp = transform.position - target.position;
-        offset = new Vector3(temp.x, temp.y, temp.z);
+        offset = new Vector3(0, temp.y, temp.z);
+        newCameraSize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, 0, target.position.z) + offset, 0.1f);
-
-        if (Input.GetAxis("Horizontal") != 0) offset.x *= Input.GetAxis("Horizontal");
+        transform.position = Vector3.Lerp(transform.position, target.position + offset, 0.1f);
+        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, newCameraSize, 0.1f);
     }
 }

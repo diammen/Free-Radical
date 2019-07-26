@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     float horizontal;
     float timer;
+    float grappleDistance;
     bool onGround;
     [SerializeField]
     bool touchingWall;
@@ -92,6 +93,8 @@ public class Player : MonoBehaviour
 
         //rb.transform.localScale = Vector3.one * (creaturesEaten * 0.1f + 1);
         rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
+
+        grappleDistance = rb.transform.localScale.magnitude * grappleMaxDistance;
     }
 
     void ScaleWall()
@@ -105,9 +108,9 @@ public class Player : MonoBehaviour
         {
 
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 grappleDir = (mousePoint - transform.position);
+            Vector3 grappleDir = (mousePoint - transform.position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, grappleDir, grappleMaxDistance, grappleMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, grappleDir, grappleDistance, grappleMask);
 
             if (hit.collider != null)
             {
@@ -120,6 +123,8 @@ public class Player : MonoBehaviour
             }
             else
             {
+                grapplePoint = transform.position + grappleDir * grappleDistance;
+                grappleRenderer.enabled = true;
                 grappled = false;
             }
 
@@ -131,8 +136,6 @@ public class Player : MonoBehaviour
 
     void RenderGrapple()
     {
-        if (!grappled)
-            return;
 
         grappleRenderer.positionCount = 2;
 
@@ -149,7 +152,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             creaturesEaten++;
-            rb.transform.localScale += Vector3.one * (5 / 10);
+            rb.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+            grappleDistance += 2;
             collision.gameObject.SetActive(false);
         }
     }

@@ -15,10 +15,12 @@ public class Player : MonoBehaviour
     public float sizeReductionRate;
     public int creaturesEaten;
     public int maxGrowthSize;
+    public float minSize;
 
     LineRenderer grappleRenderer;
     Rigidbody2D rb;
     CheckTrigger grappleCollider;
+    GameManager gm;
     Vector2 currentVelocity;
     Vector2 force;
     Vector2 moveVector;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         grappleRenderer = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
         grappleCollider = GetComponentInChildren<CheckTrigger>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         sqrMaxSpeed = maxSpeed * maxSpeed;
     }
@@ -91,8 +94,14 @@ public class Player : MonoBehaviour
             rb.gravityScale = 1;
         }
 
-        //rb.transform.localScale = Vector3.one * (creaturesEaten * 0.1f + 1);
-        rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
+        if (rb.transform.localScale.magnitude > minSize)
+            rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
+
+        if (rb.transform.localScale.magnitude > maxGrowthSize)
+        {
+            minSize = maxGrowthSize;
+            maxGrowthSize *= 2;
+        }
 
         grappleDistance = rb.transform.localScale.magnitude * grappleMaxDistance;
     }
@@ -152,7 +161,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             creaturesEaten++;
-            rb.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+            rb.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
             collision.gameObject.SetActive(false);
         }
     }

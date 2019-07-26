@@ -27,6 +27,7 @@ public class NPC : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.GetComponent<Player>().creaturesEaten++;
             gameObject.SetActive(false);
         }
     }

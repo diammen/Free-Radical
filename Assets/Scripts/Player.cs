@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public float grappleMaxDistance;
     public float moveSpeed;
     public float grappleSpeed;
+    public int creaturesEaten;
+    public int maxGrowthSize;
 
     LineRenderer grappleRenderer;
     Rigidbody2D rb;
@@ -78,6 +80,8 @@ public class Player : MonoBehaviour
         {
             rb.gravityScale = 1;
         }
+
+        rb.transform.localScale = Vector3.one * (creaturesEaten * 0.1f + 1);
     }
 
     void ScaleWall()

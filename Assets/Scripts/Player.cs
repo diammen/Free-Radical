@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float grappleMaxDistance;
     public float moveSpeed;
     public float grappleSpeed;
+    public float sizeReductionRate;
     public int creaturesEaten;
     public int maxGrowthSize;
 
@@ -81,7 +82,8 @@ public class Player : MonoBehaviour
             rb.gravityScale = 1;
         }
 
-        rb.transform.localScale = Vector3.one * (creaturesEaten * 0.1f + 1);
+        //rb.transform.localScale = Vector3.one * (creaturesEaten * 0.1f + 1);
+        rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
     }
 
     void ScaleWall()
@@ -135,6 +137,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Climbable"))
         {
             touchingWall = true;
+        }
+        if (collision.gameObject.CompareTag("NPC"))
+        {
+            rb.transform.localScale += Vector3.one * (creaturesEaten * 0.1f);
         }
     }
 

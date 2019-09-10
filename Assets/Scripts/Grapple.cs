@@ -10,6 +10,10 @@ public class Grapple : MonoBehaviour
     public Transform crosshair;
     public SpriteRenderer crosshairSprite;
     public Player player;
+
+    public float climbSpeed;
+    private bool isColliding;
+
     private bool grappleAttached;
     private Vector2 playerPosition;
     private Rigidbody2D hingeAnchorRb;
@@ -19,6 +23,7 @@ public class Grapple : MonoBehaviour
     public LayerMask grappleLayerMask;
     private float grappleMaxCastDistance = 50f;
     private List<Vector2> grapplePositions = new List<Vector2>();
+    private Dictionary<Vector2, int> wrapPointsLookup = new Dictionary<Vector2, int>();
 
     private bool distanceSet;
 
@@ -48,14 +53,44 @@ public class Grapple : MonoBehaviour
 
         if (!grappleAttached)
         {
+            player.grappled = false;
             SetCrosshairPosition(aimAngle);
         }
         else
         {
+            player.grappled = true;
+
             crosshairSprite.enabled = false;
+
+            if (grapplePositions.Count > 0)
+            {
+                var lastRopePoint = grapplePositions.Last();
+                var playerToCurrentNextHit = Physics2D.Raycast(playerPosition, (lastRopePoint - playerPosition).normalized,
+                                                               Vector2.Distance(playerPosition, lastRopePoint) - 0.1f, grappleLayerMask);
+
+                if (playerToCurrentNextHit) 
+                {
+                    var colliderWithVerts = playerToCurrentNextHit.collider as PolygonCollider2D;
+                    if (colliderWithVerts != null)
+                    {
+                        var closestPointToHit = GetClosestColliderPointFromRaycastHit(playerToCurrentNextHit, colliderWithVerts);
+
+                        if (wrapPointsLookup.ContainsKey(closestPointToHit)) 
+                        {
+                            ResetRope();
+                            return;
+                        }
+
+                        grapplePositions.Add(closestPointToHit);
+                        wrapPointsLookup.Add(closestPointToHit, 0);
+                        distanceSet = false;
+                    }
+                }
+            }
         }
 
         HandleInput(aimDirection);
+        HandleGrappleLength();
     }
 
     private void SetCrosshairPosition(float aimAngle)
@@ -107,7 +142,7 @@ public class Grapple : MonoBehaviour
             ResetRope();
         }
 
-        //UpdateGrapplePositions();
+        UpdateGrapplePositions();
     }
 
     private void ResetRope()
@@ -119,6 +154,7 @@ public class Grapple : MonoBehaviour
         grappleRenderer.SetPosition(1, transform.position);
         grapplePositions.Clear();
         hingeAnchorSprite.enabled = false;
+        wrapPointsLookup.Clear();
     }
 
     private void UpdateGrapplePositions()
@@ -175,5 +211,37 @@ public class Grapple : MonoBehaviour
                 grappleRenderer.SetPosition(i, transform.position);
             }
         }
+    }
+
+    private Vector2 GetClosestColliderPointFromRaycastHit(RaycastHit2D hit, PolygonCollider2D polyCollider)
+    {
+        var distanceDictionary = polyCollider.points.ToDictionary<Vector2, float, Vector2>(
+        position => Vector2.Distance(hit.point, polyCollider.transform.TransformPoint(position)),
+        position => polyCollider.transform.TransformPoint(position));
+
+        var orderedDictionary = distanceDictionary.OrderBy(e => e.Key);
+        return orderedDictionary.Any() ? orderedDictionary.First().Value : Vector2.zero;
+    }
+
+    private void HandleGrappleLength()
+    {
+        if (Input.GetAxis("Vertical") >= 1f && grappleAttached) 
+        {
+            joint.distance -= Time.deltaTime * climbSpeed;
+        }
+        else if (Input.GetAxis("Vertical") < 0f && grappleAttached)
+        {
+            joint.distance += Time.deltaTime * climbSpeed;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        isColliding = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isColliding = false;
     }
 }

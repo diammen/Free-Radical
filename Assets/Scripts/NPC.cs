@@ -45,8 +45,6 @@ public class NPC : MonoBehaviour
 
             Vector3 direction = destination - transform.position;
 
-            Debug.Log(direction.magnitude);
-
             sprite.flipX = direction.x < 0 ? false : true;
         }
     }

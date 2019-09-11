@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Rigidbody2D rb;
     public GameObject wallStuckTo;
     public int creaturesEaten;
     public float moveSpeed;
@@ -15,8 +16,9 @@ public class Player : MonoBehaviour
     public bool grappled;
 
     LineRenderer grappleRenderer;
-    Rigidbody2D rb;
-    CheckTrigger grappleCollider;
+    CheckTrigger wallCollider;
+    [SerializeField]
+    CheckTrigger hitCollider;
     GameManager gm;
     Vector2 currentVelocity;
     Vector2 force;
@@ -37,22 +39,34 @@ public class Player : MonoBehaviour
     {
         grappleRenderer = GetComponent<LineRenderer>();
         rb = GetComponentInChildren<Blob>().gameObject.GetComponent<Rigidbody2D>();
-        grappleCollider = GetComponentInChildren<CheckTrigger>();
+        wallCollider = GetComponentInChildren<CheckTrigger>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         sqrMaxSpeed = maxSpeed * maxSpeed;
     }
 
+    void Update()
+    {
+        if (hitCollider.isColliding && hitCollider.collidedWith != null)
+        {
+            hitCollider.collidedWith.gameObject.SetActive(false);
+            creaturesEaten++;
+            rb.transform.localScale += new Vector3(currentFoodIntake, currentFoodIntake, currentFoodIntake);
+            hitCollider.isColliding = false;
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+
         horizontal = Input.GetAxis("Horizontal");
 
         moveVector = new Vector2(horizontal, 0) * (moveSpeed * 5000);
         currentVelocity = rb.velocity;
 
         force = moveVector * Time.deltaTime - currentVelocity;
-        rb.AddForce(force, ForceMode2D.Force);
+        rb.AddForce(force * Vector3.ProjectOnPlane(force, Vector3.down), ForceMode2D.Force);
 
         if (currentVelocity.sqrMagnitude > sqrMaxSpeed)
         {
@@ -64,11 +78,23 @@ public class Player : MonoBehaviour
         if (touchingWall && horizontal != 0)
             ScaleWall();
 
+        touchingWall = wallCollider.isColliding;
+
+        //if (rb.transform.localScale.x > minSize)
+        //    rb.transform.localScale -= new Vector3(sizeReductionRate, sizeReductionRate, sizeReductionRate) / 10 * Time.deltaTime;
+
+        if (rb.transform.localScale.x > maxGrowthSize)
+        {
+            gm.reachedCheckpoint = true;
+            minSize = maxGrowthSize;
+            maxGrowthSize *= 2;
+            currentFoodIntake *= 2;
+        }
     }
 
     void ScaleWall()
     {
-        rb.AddForce(Vector2.up * 750);
+        rb.AddForce(Vector2.up * 30, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -76,12 +102,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Climbable"))
         {
             touchingWall = true;
-        }
-        if (collision.gameObject.CompareTag("NPC"))
-        {
-            creaturesEaten++;
-            rb.transform.localScale += new Vector3(currentFoodIntake, currentFoodIntake, currentFoodIntake);
-            collision.gameObject.SetActive(false);
         }
     }
 

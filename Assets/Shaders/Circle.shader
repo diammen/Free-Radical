@@ -1,8 +1,9 @@
 ﻿Shader "Custom/Circle" {
     Properties {
+        _MainTex ("Main Texture", 2D) = "white" {}
         _Color ("Color", Color) = (1, 1, 1, 0)
 		_EmissionMap ("Emission Map", 2D) = "black" {}
-		[HDR] _EmissionColor ("Emission Color", Color) = (0, 0, 0)
+		[HDR] _EmissionColor ("Emission Color", Color) = (0, 0, 0, 0)
     }
 
     SubShader {
@@ -13,16 +14,20 @@
 		// CGPROGRAM
 		// #pragma surface surf Lambert
 
-		// half3 _EmissionColor;
+        // sampler2D _MainTex;
 
-		// struct Input 
+        // sampler2D _EmissionMap;
+        // float4 _EmissionColor;
+
+		// struct Input
 		// {
 		// 	float2 uv_MainTex;
 		// };
 
 		// void surf(Input i, inout SurfaceOutput o)
 		// {
-		// 	o.Emission = _EmissionColor;
+		// 	//o.Emission = _EmissionColor * tex2D(_MainTex, i.uv_MainTex).a;
+		// 	//o.Emission = _EmissionColor;
 		// }
 
 		// ENDCG
@@ -35,6 +40,9 @@
             #pragma fragment frag
             #pragma target 3.0
 
+            sampler2D _MainTex;
+            sampler2D _EmissionMap;
+
             float4 _Color;
 
             float4 frag(v2f_img i): COLOR {
@@ -42,7 +50,12 @@
                 float distance = length(i.uv - float2(0.5, 0.5));
                 float delta = fwidth(distance);
                 float alpha = smoothstep(0.5, 0.5 - delta, distance);
-                return lerp(transparent, _Color, alpha);
+
+                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 emission = tex2D(_EmissionMap, i.uv);
+
+                //return fixed4(0,0,0,0);
+                return lerp(transparent, emission * _Color + col, alpha);
             }
             ENDCG
         }

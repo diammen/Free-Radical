@@ -4464,6 +4464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192472551}
+  - component: {fileID: 192472552}
   m_Layer: 0
   m_Name: FogLayer_Back
   m_TagString: Untagged
@@ -4505,6 +4506,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &192472552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 192472550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6780f15b494ae408d3b99ffad88f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPos: {fileID: 0}
+  speed: 0.5
 --- !u!1 &192930486
 GameObject:
   m_ObjectHideFlags: 0
@@ -6383,6 +6397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 305963625}
+  - component: {fileID: 305963626}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -6428,6 +6443,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 83
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &305963626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 305963624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6780f15b494ae408d3b99ffad88f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPos: {fileID: 0}
+  speed: 1.1
 --- !u!1 &309319263
 GameObject:
   m_ObjectHideFlags: 0
@@ -16256,6 +16284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 757781321}
+  - component: {fileID: 757781322}
   m_Layer: 0
   m_Name: FogLayer_Front
   m_TagString: Untagged
@@ -16317,6 +16346,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757781322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 757781320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6780f15b494ae408d3b99ffad88f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPos: {fileID: 0}
+  speed: 0.7
 --- !u!4 &766354905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4050659097632474, guid: e80f411d19c5d0b48b124ffed06dc001,
@@ -31649,8 +31691,8 @@ Transform:
   - {fileID: 2099211200}
   - {fileID: 999564412}
   - {fileID: 915879893}
-  - {fileID: 380650059}
   - {fileID: 1625605424}
+  - {fileID: 380650059}
   - {fileID: 626330469}
   - {fileID: 335970369}
   - {fileID: 828963167}
@@ -31683,8 +31725,8 @@ Transform:
   - {fileID: 1063861324}
   - {fileID: 1422997277}
   - {fileID: 458790323}
-  - {fileID: 2006968935}
   - {fileID: 1869593606}
+  - {fileID: 2006968935}
   m_Father: {fileID: 0}
   m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -34470,6 +34512,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1838445561}
+  - component: {fileID: 1838445562}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -34524,6 +34567,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1838445562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838445560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6780f15b494ae408d3b99ffad88f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPos: {fileID: 0}
+  speed: 0.3
 --- !u!1001 &1839478411
 Prefab:
   m_ObjectHideFlags: 0

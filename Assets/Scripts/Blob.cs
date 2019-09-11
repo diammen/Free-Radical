@@ -39,7 +39,6 @@ public class Blob : MonoBehaviour
     void CreateReferencePoints()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        //Rigidbody2D rb = GetComponent<Rigidbody2D>();
         referencePoints = new GameObject[referencePointsCount];
         Vector3 offsetFromCenter = ((0.5f - referencePointRadius) * Vector3.up);
         float angle = 360.0f / referencePointsCount;
@@ -48,6 +47,7 @@ public class Blob : MonoBehaviour
         {
             referencePoints[i] = new GameObject();
             referencePoints[i].tag = gameObject.tag;
+            referencePoints[i].layer = 15;
             referencePoints[i].transform.parent = transform;
             Quaternion rotation = Quaternion.AngleAxis(angle * (i - 1), Vector3.back);
             referencePoints[i].transform.localPosition = rotation * offsetFromCenter;

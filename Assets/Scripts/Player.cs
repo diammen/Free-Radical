@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         currentVelocity = rb.velocity;
 
         force = moveVector * Time.deltaTime - currentVelocity;
-        rb.AddForce(force * Vector3.ProjectOnPlane(force, Vector3.down), ForceMode2D.Force);
+        rb.AddForce(force, ForceMode2D.Force);
 
         if (currentVelocity.sqrMagnitude > sqrMaxSpeed)
         {
